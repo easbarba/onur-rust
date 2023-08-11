@@ -4,7 +4,8 @@ version = "0.1.0"
 edition = "2021"
 description = "Easily manage multiple FLOSS repositories"
 authors = ["EAS Barbosa <easbarba@outlook.com>"]
-license = "GPL-3.0-or-later"
+license = "Apache-2.0"
 repository = "https://gitlab.com/easbarba/onur"
 
 [dependencies]
+clap = {version = "4.3.21", features = ["derive"]}

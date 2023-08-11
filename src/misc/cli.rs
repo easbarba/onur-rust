@@ -14,27 +14,19 @@
  * limitations under the License.
  */
 
-#[path = "./misc/cli.rs"]
-mod cli;
+use clap::{arg, Command};
 
-fn main() {
-    let matches = cli::options().get_matches();
-    match matches.subcommand() {
-        Some(("grab", _)) => {
-            println!("grab them all");
-        }
-
-        Some(("backup", sub_matches)) => {
-            println!(
-                "backing up {:?}",
-                sub_matches
-                    .get_one::<String>("resources")
-                    .expect("required")
-                    .split(",")
-                    .collect::<Vec<&str>>()
-            );
-        }
-
-        _ => unreachable!(),
-    }
+pub fn options() -> Command {
+    Command::new("onur")
+        .about("Easily manage multiple FLOSS repositories.")
+        .subcommand_required(true)
+        .arg_required_else_help(true)
+        .allow_external_subcommands(true)
+        .subcommand(Command::new("grab").about("grab all resources"))
+        .subcommand(
+            Command::new("backup")
+                .about("back up resourecs")
+                .arg(arg!(<resources> "resource sto backup"))
+                .arg_required_else_help(true),
+        )
 }
