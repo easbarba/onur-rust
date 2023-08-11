@@ -1,0 +1,10 @@
+[package]
+name = "onur"
+version = "0.1.0"
+edition = "2021"
+description = "Easily manage multiple FLOSS repositories"
+authors = ["EAS Barbosa <easbarba@outlook.com>"]
+license = "GPL-3.0-or-later"
+repository = "https://gitlab.com/easbarba/onur"
+
+[dependencies]
