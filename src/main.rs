@@ -17,12 +17,13 @@
 #[path = "./misc/cli.rs"]
 mod cli;
 
+#[path = "./database/files.rs"]
+mod files;
+
 fn main() {
     let matches = cli::options().get_matches();
     match matches.subcommand() {
-        Some(("grab", _)) => {
-            println!("grab them all");
-        }
+        Some(("grab", _)) => println!("{:?}", files::names().unwrap()),
 
         Some(("backup", sub_matches)) => {
             println!(

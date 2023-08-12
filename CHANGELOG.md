@@ -19,6 +19,7 @@
 ## 0.2.0
 
 - feat: implement cli interface
+- feat: query configurations files
 
 ## 0.1.0
 
