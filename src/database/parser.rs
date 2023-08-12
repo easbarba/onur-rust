@@ -16,31 +16,31 @@
 
 use std::{collections::HashMap, fs};
 
-#[path = "./files.rs"]
-mod files;
-
-#[path = "../domain/project.rs"]
-mod project;
+use crate::database::files;
+use crate::domain::project::Project;
 
 // Parse one configuration
-fn one(f: std::path::PathBuf) -> Vec<project::Project> {
+fn one(f: std::path::PathBuf) -> Vec<Project> {
     let file = fs::read_to_string(f.as_path()).expect("gimme it");
-    let result: Vec<project::Project> = serde_json::from_str(&file).expect("translate it");
+    let result: Vec<Project> = serde_json::from_str(&file).expect("translate it");
 
     result
 }
 
 // Collect all parsed configurations
-pub fn all(verbose: bool) -> HashMap<String, Vec<project::Project>> {
-    let mut configs: HashMap<String, Vec<project::Project>> = HashMap::new();
+pub fn all(verbose: bool) -> HashMap<String, Vec<Project>> {
+    let mut configs: HashMap<String, Vec<Project>> = HashMap::new();
 
     if verbose {
         print_info();
     }
 
-    files::names().unwrap().into_iter().for_each(|f| {
-        configs.insert(f.file_stem().unwrap().to_str().unwrap().to_string(), one(f));
-    });
+    crate::database::files::names()
+        .unwrap()
+        .into_iter()
+        .for_each(|f| {
+            configs.insert(f.file_stem().unwrap().to_str().unwrap().to_string(), one(f));
+        });
 
     return configs;
 }

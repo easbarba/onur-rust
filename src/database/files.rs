@@ -16,8 +16,7 @@
 
 use std::path::PathBuf;
 
-#[path = "../misc/globals.rs"]
-mod globals;
+use crate::misc::globals;
 
 // do config folder exist?
 pub fn exist() -> bool {

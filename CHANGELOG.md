@@ -21,6 +21,7 @@
 - feat: implement cli interface
 - feat: query configurations files
 - feat: parse all files
+- feat: pick action per project
 
 ## 0.1.0
 

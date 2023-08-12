@@ -14,26 +14,6 @@
  * limitations under the License.
  */
 
-mod actions;
-mod commands;
-mod database;
-mod domain;
-mod misc;
+pub mod grab;
 
-fn main() {
-    let matches = misc::cli::options().get_matches();
-    match matches.subcommand() {
-        Some(("grab", _)) => commands::grab::run(true),
-        Some(("backup", sub_matches)) => {
-            println!(
-                "backing up {:?}",
-                sub_matches
-                    .get_one::<String>("resources")
-                    .expect("required")
-                    .split(",")
-                    .collect::<Vec<&str>>()
-            );
-        }
-        _ => unreachable!(),
-    }
-}
+

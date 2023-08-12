@@ -18,10 +18,12 @@ use serde_derive::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Project {
-    name: String,
-    url: String,
+    pub name: String,
+
+    pub url: String,
+
     #[serde(default = "default_branch")]
-    branch: String,
+    pub branch: String,
 }
 
 fn default_branch() -> String {
