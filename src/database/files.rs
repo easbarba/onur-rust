@@ -44,12 +44,13 @@ pub fn names() -> Result<Vec<PathBuf>, std::io::Error> {
         std::process::exit(1);
     }
 
-    return Ok(globals::config_home()
+    Ok(globals::config_home()
         .read_dir()?
         .filter_map(|res| res.ok())
         .map(|d| d.path())
         .filter(|x| x.to_string_lossy().ends_with(".json"))
-        .collect::<Vec<_>>());
+        .filter(|f| f.exists())
+        .collect::<Vec<PathBuf>>())
 }
 
 #[cfg(test)]

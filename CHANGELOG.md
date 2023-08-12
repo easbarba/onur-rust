@@ -20,6 +20,7 @@
 
 - feat: implement cli interface
 - feat: query configurations files
+- feat: parse all files
 
 ## 0.1.0
 

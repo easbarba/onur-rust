@@ -17,14 +17,21 @@
 #[path = "./misc/cli.rs"]
 mod cli;
 
-#[path = "./database/files.rs"]
-mod files;
+#[path = "./database/parser.rs"]
+mod parser;
 
 fn main() {
     let matches = cli::options().get_matches();
     match matches.subcommand() {
-        Some(("grab", _)) => println!("{:?}", files::names().unwrap()),
+        Some(("grab", _)) => parser::all(true).into_iter().for_each(|config| {
+            println!("Topic: {:?}", config.0);
+            config
+                .1
+                .into_iter()
+                .for_each(|project| println!("{:?}", project));
 
+            println!();
+        }),
         Some(("backup", sub_matches)) => {
             println!(
                 "backing up {:?}",
@@ -35,7 +42,6 @@ fn main() {
                     .collect::<Vec<&str>>()
             );
         }
-
         _ => unreachable!(),
     }
 }
