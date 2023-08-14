@@ -51,12 +51,18 @@ lint:
 pub:
 	cargo publish
 
+install: build
+	cp ./target/release/onur ${HOME}/.local/bin/
+
 # -------------------------------- COMMANDS
 
 grab:
-	cargo run -- grab --verbose
+	cargo run -- --verbose grab
 
 backup:
-	cargo run -- backup --name nuxt,awesomewm --verbose
+	cargo run -- --verbose backup --name nuxt,awesomewm
+
+make help:
+	cargo run
 
 .PHONY: deps test fmt lint pub run build grab archive image-build image-clean image-test

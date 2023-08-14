@@ -22,7 +22,7 @@ Easily manage multiple FLOSS repositories.
 
 # Installation
 
-[java](https://gitlab.com/easbarba/onur-java) | [python](https://gitlab.com/easbarba/onur) | [php](https://gitlab.com/easbarba/onur-php) | [ruby](https://gitlab.com/easbarba/qas-rb) | [go](https://gitlab.com/easbarba/qas-go)
+[go](https://gitlab.com/easbarba/onur-go) | [java](https://gitlab.com/easbarba/onur-java) | [python](https://gitlab.com/easbarba/onur-python) | [php](https://gitlab.com/easbarba/onur-php) | [ruby](https://gitlab.com/easbarba/onur-ruby)
 
 ## Usage
 
@@ -58,6 +58,14 @@ A `onur` single configuration file:
 More examples of configuration files are at `examples`.
 
 ## Settings
+
+A TOML settings file may define the behavior of `onur`:
+
+```toml
+single-branch = true
+quiet = true
+depth = 1
+```
 
 ## Options
 

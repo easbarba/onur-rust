@@ -14,11 +14,18 @@
  * limitations under the License.
  */
 
-use clap::{arg, Command};
+use clap::{arg, Arg, ArgAction, Command};
 
 pub fn options() -> Command {
     Command::new("onur")
         .about("Easily manage multiple FLOSS repositories.")
+        .arg(
+            Arg::new("verbose")
+                .help("get as much info as possible")
+                .short('v')
+                .long("verbose")
+                .action(ArgAction::SetTrue),
+        )
         .subcommand_required(true)
         .arg_required_else_help(true)
         .allow_external_subcommands(true)

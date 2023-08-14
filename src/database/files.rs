@@ -27,13 +27,16 @@ pub fn exist() -> bool {
 pub fn empty() -> bool {
     globals::config_home()
         .read_dir()
-        .expect("meh")
+        .expect("No configuration folder found")
         .next()
         .is_none()
 }
 
 pub fn count() -> usize {
-    globals::config_home().read_dir().expect("foool").count()
+    globals::config_home()
+        .read_dir()
+        .expect("No configuration folder found")
+        .count()
 }
 
 // list all configurations file names

@@ -16,6 +16,10 @@
 
 -->
 
+## 0.3.0
+
+- refactor: improve configuration parsing
+
 ## 0.2.0
 
 - feat: implement cli interface

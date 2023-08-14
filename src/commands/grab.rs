@@ -23,22 +23,22 @@ use crate::{
 
 pub fn run(verbose: bool) {
     parser::all(true).into_iter().for_each(|config| {
-        println!("Topic: {:?}", &config.0);
-        config.1.into_iter().for_each(|projekt| {
-            print_info(&projekt, verbose);
+        println!("Topic: {:?}", &config.topic);
+        config.projects.into_iter().for_each(|project| {
+            print_info(&project, verbose);
 
-            let filepath = projects_home().join(&config.0).join(&projekt.name);
+            let filepath = projects_home().join(&config.topic).join(&project.name);
             if filepath.exists() {
-                match pull::run(&projekt, filepath) {
+                match pull::run(&project, filepath, verbose) {
                     Err(_) => (), //println!("{:?}", e),
                     _ => (),
                 }
             } else {
-                clone::run(&projekt, filepath);
+                clone::run(&project, filepath, verbose);
             }
         });
 
-        println!()
+        println!();
     });
 }
 

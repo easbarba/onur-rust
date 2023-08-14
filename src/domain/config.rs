@@ -13,3 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+use super::project::Project;
+
+pub struct Config {
+    pub topic: String,
+    pub projects: Vec<Project>,
+}
+
+impl Config {
+    pub fn new(topic: String, projects: Vec<Project>) -> Config {
+        Config { topic, projects }
+    }
+}

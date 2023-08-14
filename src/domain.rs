@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-pub mod configuration;
+pub mod config;
 pub mod project;

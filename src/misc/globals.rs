@@ -16,17 +16,17 @@
 
 use std::path::{Path, PathBuf};
 
-// user's home
+/// user's home directory
 pub fn user_home() -> &'static Path {
-    Path::new(env!("HOME"))
+    Path::new(env!("HOME", "User home directory not found!"))
 }
 
-// user's home
+/// user's projects directory
 pub fn projects_home() -> PathBuf {
-    Path::new(env!("HOME")).join("Projects")
+    user_home().join("Projects")
 }
 
-// project main config folder
+/// main config directory
 pub fn config_home() -> PathBuf {
-    Path::new(user_home()).join(".config").join("onur")
+    user_home().join(".config").join("onur")
 }

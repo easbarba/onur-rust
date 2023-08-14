@@ -16,10 +16,13 @@
 
 use std::path::PathBuf;
 
-use git2::Repository;
+use git2::build;
 
-pub fn run(project: &crate::domain::project::Project, path: PathBuf) {
-    match Repository::clone(&project.url, path) {
+pub fn run(project: &crate::domain::project::Project, path: PathBuf, _verbose: bool) {
+    let mut bu = build::RepoBuilder::new();
+    bu.branch(&project.branch);
+
+    match bu.clone(&project.url, &path) {
         Ok(repo) => repo,
         Err(e) => panic!("failed to clone: {}", e),
     };

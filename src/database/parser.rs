@@ -14,22 +14,24 @@
  * limitations under the License.
  */
 
-use std::{collections::HashMap, fs};
+use std::{fs, path};
 
 use crate::database::files;
+use crate::domain::config::Config;
 use crate::domain::project::Project;
 
 // Parse one configuration
-fn one(f: std::path::PathBuf) -> Vec<Project> {
-    let file = fs::read_to_string(f.as_path()).expect("gimme it");
-    let result: Vec<Project> = serde_json::from_str(&file).expect("translate it");
+fn one(filepath: path::PathBuf) -> Config {
+    let file = fs::read_to_string(filepath.as_path()).expect("gimme it");
+    let topic = filepath.file_stem().unwrap().to_str().unwrap().to_string();
+    let projects: Vec<Project> = serde_json::from_str(&file).expect("translate it");
 
-    result
+    Config::new(topic, projects)
 }
 
 // Collect all parsed configurations
-pub fn all(verbose: bool) -> HashMap<String, Vec<Project>> {
-    let mut configs: HashMap<String, Vec<Project>> = HashMap::new();
+pub fn all(verbose: bool) -> Vec<Config> {
+    let mut configs: Vec<Config> = Vec::new();
 
     if verbose {
         print_info();
@@ -39,7 +41,7 @@ pub fn all(verbose: bool) -> HashMap<String, Vec<Project>> {
         .unwrap()
         .into_iter()
         .for_each(|f| {
-            configs.insert(f.file_stem().unwrap().to_str().unwrap().to_string(), one(f));
+            configs.push(one(f.to_path_buf()));
         });
 
     return configs;
