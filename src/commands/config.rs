@@ -13,17 +13,21 @@
 * along with Onur. If not, see <https://www.gnu.org/licenses/>.
 */
 
-use std::collections::HashMap;
+pub fn run(topic: &String, name: &Option<String>, url: &Option<String>, branch: &Option<String>) {
+    println!("managing configs {}", topic);
 
-use super::project::Project;
+    match name {
+        Some(v) => println!("name: {}", String::from(v)),
+        None => {}
+    }
 
-pub struct Config {
-    pub name: String,
-    pub topics: HashMap<String, Vec<Project>>,
-}
+    match url {
+        Some(v) => println!("url: {}", String::from(v)),
+        None => {}
+    }
 
-impl Config {
-    pub fn new(name: String, topics: HashMap<String, Vec<Project>>) -> Config {
-        Config { name, topics }
+    match branch {
+        Some(v) => println!("branch: {}", String::from(v)),
+        None => {}
     }
 }

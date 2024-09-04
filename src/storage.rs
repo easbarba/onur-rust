@@ -13,17 +13,7 @@
 * along with Onur. If not, see <https://www.gnu.org/licenses/>.
 */
 
-use std::collections::HashMap;
-
-use super::project::Project;
-
-pub struct Config {
-    pub name: String,
-    pub topics: HashMap<String, Vec<Project>>,
-}
-
-impl Config {
-    pub fn new(name: String, topics: HashMap<String, Vec<Project>>) -> Config {
-        Config { name, topics }
-    }
-}
+pub mod collection;
+pub mod files;
+pub mod parser;
+pub mod queries;

@@ -1,4 +1,4 @@
-[base]
+[git]
 single-branch = true
-quiet = true
-depth = "1"
+quiet = false
+depth = 3

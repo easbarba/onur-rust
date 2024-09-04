@@ -1,68 +1,77 @@
-#  Copyright 2023 EAS Barbosa
+# Onur is free software: you can redistribute it and/or modify
+# it under  the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
 #
-#      Licensed under the Apache License, Version 2.0(the "License");
-#  you may not use this file except in compliance with the License.
-#  You may obtain a copy of the License at
+# Onur is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 #
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-#  Unless required by applicable law or agreed to in writing, software
-#  distributed under the License is distributed on an "AS IS" BASIS,
-#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#  See the License for the specific language governing permissions and
-#  limitations under the License.
+# You should have received a copy of the GNU General Public License
+# along with Onur. If not, see <https://www.gnu.org/licenses/>.
+
+# DEPS: fzf podman bash:5.5
 
 .DEFAULT_GOAL := test
 
 RUNNER ?= podman
 NAME := onur
-VERSION := $(shell gawk '/version/ {version=substr($$3,2,5); print version; exit}' Cargo.toml)
-FULLNAME := ${USER}/${NAME}:${VERSION}
+VERSION := $(shell gawk -F '"' '/version/ { print $$2; exit}' Cargo.toml)
+CONTAINER_IMAGE := registry.gitlab.com/${USER}/${NAME}-rust:${VERSION}
 
-# -------------------------------- CONTAINERS
+# ================================= TASKS
 
-image-test:
-	${RUNNER} run --rm ${FULLNAME}
-
-image-build:
-	${RUNNER} build --file ./Containerfile --tag ${FULLNAME}
-
-image-clean:
-	${RUNNER} container --rm -f ${FULLNAME}
-
-
-# --------------------- TASKS
-
-build:
+.PHONY: local.build
+local.build:
 	cargo build --release --verbose
 
-test:
+.PHONY: local.test
+local.test:
 	cargo test --verbose
 
-deps:
+.PHONY: local.deps
+local.deps:
 	cargo build
 
-fmt:
+.PHONY: local.fmt
+local.fmt:
 	cargo fmt
 
-lint:
+.PHONY: local.lint
+local.lint:
 	cargo clippy
 
-pub:
+.PHONY: local.pub
+local.pub:
 	cargo publish
 
-install: build
+.PHONY: local.install
+local.install: build
 	cp ./target/release/onur ${HOME}/.local/bin/
 
-# -------------------------------- COMMANDS
+# ================================= CONTAINER
 
-grab:
-	cargo run -- --verbose grab
+.PHONY: image.build
+image.build:
+	${RUNNER} build --file ./Containerfile --tag ${CONTAINER_IMAGE} --env ONUR_VERSION=${VERSION}
 
-backup:
-	cargo run -- --verbose backup --name nuxt,awesomewm
+.PHONY: image.repl
+image.repl:
+	${RUNNER} run --rm -it \
+		--volume ${PWD}:/app:Z \
+		--workdir /home/easbarba/app \
+		${CONTAINER_IMAGE} bash
 
-make help:
-	cargo run
+.PHONY: image.publish
+image.publish:
+	${RUNNER} push ${CONTAINER_IMAGE}
 
-.PHONY: deps test fmt lint pub run build grab archive image-build image-clean image-test
+.PHONY: image.commands
+image.commands:
+	${RUNNER} run --rm -it \
+		--volume ${PWD}:/app:Z \
+		--workdir /home/easbarba/app \
+		${CONTAINER_IMAGE} bash -c "$(shell cat ./container-commands | fzf)"
+
+

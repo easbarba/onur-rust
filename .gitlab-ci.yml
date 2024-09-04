@@ -1,0 +1,18 @@
+workflow:
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: $CI_COMMIT_BRANCH == 'main'
+
+stages:
+  - build
+  - test
+
+default:
+  image: registry.gitlab.com/easbarba/onur-rust:$ONUR_VERSION
+
+Integration Testing:
+  stage: test
+  script:
+    - cargo test
+

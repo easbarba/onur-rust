@@ -1,15 +1,15 @@
 [package]
 name = "onur"
-version = "0.3.0"
+version = "0.4.0"
 edition = "2021"
 description = "Easily manage multiple FLOSS repositories"
 authors = ["EAS Barbosa <easbarba@outlook.com>"]
-license = "Apache-2.0"
+license = "GPL-3 or later"
 repository = "https://gitlab.com/easbarba/onur"
 
 [dependencies]
-clap = {version = "4.3.21", features = ["derive"]}
-git2 = "0.17.2"
-serde = "1.0.183"
-serde_derive = "1.0.183"
-serde_json = "1.0.104"
+clap = {version = "4.5.17", features = ["derive"]}
+git2 = "0.19.0"
+serde = "1.0.209"
+serde_derive = "1.0.209"
+serde_json = "1.0.127"

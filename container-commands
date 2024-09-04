@@ -1,0 +1,16 @@
+onur grab
+onur archive nuxt,awesomewm,git
+onur --help
+
+cargo run -- --verbose grab
+cargo run -- --verbose backup --name nuxt,awesomewm
+cargo run
+
+cargo build --release --verbose
+cargo test --verbose
+cargo test
+cargo build
+cargo fmt
+cargo publish
+
+cargo clippy

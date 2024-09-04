@@ -13,17 +13,6 @@
 * along with Onur. If not, see <https://www.gnu.org/licenses/>.
 */
 
-use std::collections::HashMap;
-
-use super::project::Project;
-
-pub struct Config {
-    pub name: String,
-    pub topics: HashMap<String, Vec<Project>>,
-}
-
-impl Config {
-    pub fn new(name: String, topics: HashMap<String, Vec<Project>>) -> Config {
-        Config { name, topics }
-    }
+pub fn run(projects: &Vec<String>) {
+    print!("backin up {:?}", projects)
 }

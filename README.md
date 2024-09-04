@@ -1,85 +1,130 @@
 <!--
+Onur is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
- Copyright 2023 EAS Barbosa
+Onur is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-     Licensed under the Apache License, Version 2.0(the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
-     http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-
+You should have received a copy of the GNU General Public License
+along with Onur. If not, see <https://www.gnu.org/licenses/>.
 -->
 
-# Onur
+# Onur | Rust
 
 Easily manage multiple FLOSS repositories.
 
-# Installation
-
-[go](https://gitlab.com/easbarba/onur-go) | [java](https://gitlab.com/easbarba/onur-java) | [python](https://gitlab.com/easbarba/onur-python) | [php](https://gitlab.com/easbarba/onur-php) | [ruby](https://gitlab.com/easbarba/onur-ruby)
+[cpp](https://gitlab.com/easbarba/onur-cpp) | [c](https://gitlab.com/easbarba/onur) | [dotnet](https://gitlab.com/easbarba/onur-dotnet) | [go](https://gitlab.com/easbarba/onur-go) | [php](https://gitlab.com/easbarba/onur-php) | [java](https://gitlab.com/easbarba/onur-java) 
+| [ruby](https://gitlab.com/easbarba/onur-ruby)
 
 ## Usage
+
+```shell
+# grab all projects
+onur grab 
+
+# grab only the c projects
+onur grab c 
+
+# list the cpp configuration file
+onur config cpp 
+
+# list topics of haskell
+onur config haskell.
+
+# list only the projects on misc topic of lisp
+onur config lisp.misc 
+
+# add a new configuration with theses entries in the topic misc of c
+onur config c.misc cli11 https://github.com/cliutils/cli11 main 
+
+# back up these projects as tar.gz
+onur backup ecmascript.nuxt lua.awesomewm misc.gitignore 
+
+onur --help
+```
+
+## Configuration file
 
 `onur` consumes configuration in the following manners:
 
 By default it looks for configuration files at `$XDG_CONFIG/onur` or in the
 directory set in the `$ONUR_CONFIG_HOME` environment variable.
 
-```shell
-onur grab
-onur archive nuxt,awesomewm,gitignore
-```
-
-## Configuration file
-
-A `onur` single configuration file:
-
 ```json
-[
-  {
-    "name": "awesomewm",
-    "branch": "dev",
-    "url": "https://github.com/awesomeWM/awesome"
-  },
-  {
-    "name": "nuxt",
-    "branch": "main",
-    "url": "https://github.com/nuxt/framework"
-  }
-]
+{
+  "main": [
+    {
+      "name": "awesomewm",
+      "url": "https://github.com/awesomeWM/awesome"
+    },
+    {
+      "name": "nuxt",
+      "branch": "main",
+      "url": "https://github.com/nuxt/framework"
+    }
+  ],
+  "misc": [
+    {
+      "name": "awesomewm",
+      "url": "https://github.com/awesomeWM/awesome"
+    },
+    {
+      "name": "nuxt",
+      "branch": "main",
+      "url": "https://github.com/nuxt/framework"
+    }
+  ],
+  "tools/gnu": [
+    {
+      "name": "inetutils",
+      "url": "https://git.savannah.gnu.org/git/inetutils.git"
+    },
+    {
+      "name": "gnu-wget",
+      "url": "https://git.savannah.gnu.org/git/wget.git"
+    }
+  ]
+}
 ```
 
-More examples of configuration files are at `examples`.
+More examples of configuration files are at [examples](examples).
 
 ## Settings
 
-A TOML settings file may define the behavior of `onur`:
+`settings.toml`
 
 ```toml
+[git]
 single-branch = true
 quiet = true
 depth = 1
 ```
 
-## Options
+# Installation
 
-Consult `onur --help` for more options.
+`cargo install --git https://gitlab.com/easbarba/onur`
+`
 
-## GNU Guix
+## DEVELOPMENT
 
-In a system with GNU Guix binary installed, its even easier to grab all
-dependencies: `guix shell`.
+In development it may suit you better running the tests in a isolated environment
+with containers, that can be done so:
 
-## TODO
+    docker run --rm -it $(docker build -qf Containerfile.run)
+ 
+or: 
 
-Check the `TODO.md` for more information.
+    podman build https://gitlab.com/easbarba/onur/-/raw/main/Containerfile --tag onur:latest
+    podman run --rm -it onur:latest 
+
+
+![Onur CLI](onur.png)
 
 ## LICENSE
 
-[Apache License, Version 2.0](https://apache.org/licenses/LICENSE-2.0)
+[GNU GENERAL PUBLIC LICENSE Version 3](https://www.gnu.org/licenses/gpl-3.0.en.html)
+
